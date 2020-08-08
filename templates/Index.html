@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if asuntos|length < 1 %}
+    <h4 style="text-align: center">There are no tasks. Create one below!</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Asunto</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        {% for asunto in asuntos %}
+            <tr>
+                <td>{{ asunto.asunto }}</td>
+                <td>{{ asunto.email }}</td>
+            <td> <a href="/delete/{{asunto.id}}">Delete</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <div class="form">
+        <form action="/" method="POST">
+            <label for="asunto">Asunto</label>
+            <input type="text" name="asunto" id="asunto">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email">
+            <input type="submit" value="Add Email">
+        </form>
+    </div>
+</div>
+    
+</body>
+</html>
