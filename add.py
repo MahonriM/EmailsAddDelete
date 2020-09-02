@@ -24,7 +24,7 @@ def index():
         except:
             return 'Hubo un error'
     else:
-        asuntos=Asunto.query.order_by(Asunto.asunto).all()
+        asuntos=Asunto.query.order_by(Asunto.id).all()
         return render_template('Index.html', asuntos=asuntos)
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -35,5 +35,25 @@ def delete(id):
         return redirect('/')
     except:
         return 'Ha ocurrido un error al eliminar'
+@app.route('/update/<int:id>',methods=['GET','POST'])
+def update(id):
+    #This  name is going to be useful for the update action we have to use the name that we put below
+    asunto=Asunto.query.get_or_404(id)
+    if request.method=='POST':
+        #Using the name that is up for update the informaction with sqlalchemy
+         asunto.asunto=request.form['asunto']
+         asunto.email=request.form['email']
+         try:
+             db.session.commit()
+             #The information is update in this moment and we return to the index
+             return redirect('/')
+         except:
+            return 'Hubo un problema'
+    else:
+        return render_template('update.html',asunto=asunto)
+
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
